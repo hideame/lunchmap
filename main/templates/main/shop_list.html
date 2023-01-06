@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Lunchmap</title>
+  <style>body {padding: 10px;}</style>
+</head>
+<body>
+  <h1>お店一覧</h1>
+  
+  {% for shop in object_list %}
+    <p> {{ shop.category.name }}, {{ shop.name }}</p>
+  {% endfor %}
+</body>
+</html>
