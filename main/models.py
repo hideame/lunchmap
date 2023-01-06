@@ -21,6 +21,10 @@ class Shop(models.Model):
         "auth.User",
         on_delete=models.CASCADE,
     )
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.PROTECT,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
