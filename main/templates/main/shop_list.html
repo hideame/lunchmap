@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Lunchmap</title>
-  <style>body {padding: 10px;}</style>
-</head>
-<body>
-  <h1>お店一覧</h1>
-  
+{% extends "./base.html" %}
+{% block content %}
+<h1>お店一覧</h1>
+<table class="table table-striped table-hover">
+  <tr>
+    <th>カテゴリ</th><th>店名</th><th>住所</th>
+  </tr>
   {% for shop in object_list %}
-    <p> {{ shop.category.name }}, {{ shop.name }}</p>
+  <tr>
+    <td>{{ shop.category.name }}</td>
+    <td><a href="{% url 'main:detail' shop.pk %}">{{ shop.name }}</a></td>
+    <td>{{ shop.address }}</td>
+  </tr>
   {% endfor %}
-</body>
-</html>
+</table>
+<div>
+  <a href="{% url 'main:create' %}">新しいお店</a>
+</div>
+{% endblock %}

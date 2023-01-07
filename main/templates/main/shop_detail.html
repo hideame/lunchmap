@@ -1,0 +1,13 @@
+{% extends "./base.html" %}
+{% block content %}
+<h1>{{ shop.name }}</h1>
+<div>
+  <p>{{ shop.category.name }}</p>
+  <p>{{ shop.address }}</p>
+</div>
+<div>
+  <a href="{% url 'main:index' %}">一覧</a> |
+  <a href="{% url 'main:update' shop.pk %}">編集</a> |
+  <a href="{% url 'main:delete' shop.pk %}">削除</a>
+</div>
+{% endblock %}
