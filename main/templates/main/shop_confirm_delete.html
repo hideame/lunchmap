@@ -3,9 +3,7 @@
 <h1>お店情報の削除</h1>
 <p>{{ object.name }}を削除しますか？</p>
 <form action="" method="post">{% csrf_token %}
-  <button type="submit" class="submit delete">削除する</button>
+  <button type="submit" class="submit delete btn btn-outline-danger">削除する</button>
+  <a href="JavaScript:history.back()" class="btn btn-outline-secondary">戻る</a>
 </form>
-<div>
-  <a href="JavaScript:history.back()">&lt; 戻る</a>
-</div>
 {% endblock %}

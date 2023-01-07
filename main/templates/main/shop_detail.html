@@ -6,8 +6,8 @@
   <p>{{ shop.address }}</p>
 </div>
 <div>
-  <a href="{% url 'main:index' %}">一覧</a> |
-  <a href="{% url 'main:update' shop.pk %}">編集</a> |
-  <a href="{% url 'main:delete' shop.pk %}">削除</a>
+  <a href="{% url 'main:index' %}" class="btn btn-outline-secondary">一覧</a>
+  <a href="{% url 'main:update' shop.pk %}" class="btn btn-outline-warning">編集</a>
+  <a href="{% url 'main:delete' shop.pk %}" class="btn btn-outline-warning">削除</a>
 </div>
 {% endblock %}

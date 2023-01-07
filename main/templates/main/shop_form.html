@@ -1,12 +1,15 @@
 {% extends "./base.html" %}
+{% load bootstrap4 %}
 {% block content %}
 <h1>お店情報の{{ object|yesno:"更新,作成" }}</h1>
 
-<form action="" method="post">{% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="submit">{{ object|yesno:"更新,作成" }}</button>
+{% if object %}
+<form action="{% url 'main:update' shop.pk %}" method="post" class="form">{% csrf_token %}
+{% else %}
+<form action="{% url 'main:create' %}" method="post" class="form">{% csrf_token %}
+{% endif %}
+  {% bootstrap_form form layout="horizontal" %}
+  <button type="submit" class="submit btn btn-outline-primary">{{ object|yesno:"更新,作成" }}</button>
+  <a href="JavaScript:history.back()" class="btn btn-outline-secondary">戻る</a>
 </form>
-<div>
-  <a href="JavaScript:history.back()">&lt; 戻る</a>
-</div>
 {% endblock %}
