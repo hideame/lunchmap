@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -12,16 +14,28 @@ class DetailView(generic.DetailView):
     model = Shop
 
 
-class CreateView(generic.edit.CreateView):
+class CreateView(LoginRequiredMixin, generic.edit.CreateView):
     model = Shop
-    fields = "__all__"
+    fields = ["name", "address", "category"]
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(CreateView, self).form_valid(form)
 
 
-class UpdateView(generic.edit.UpdateView):
+class UpdateView(LoginRequiredMixin, generic.edit.UpdateView):
     model = Shop
-    fields = "__all__"
+    fields = ["name", "address", "category"]
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        print(obj.author)
+        print(self.request.user)
+        if obj.author != self.request.user:
+            raise PermissionDenied()
+        return super(UpdateView, self).dispatch(request, *args, **kwargs)
 
 
-class DeleteView(generic.edit.DeleteView):
+class DeleteView(LoginRequiredMixin, generic.edit.DeleteView):
     model = Shop
     success_url = reverse_lazy("main:index")
