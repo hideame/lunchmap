@@ -32,10 +32,18 @@ class UpdateView(LoginRequiredMixin, generic.edit.UpdateView):
         print(obj.author)
         print(self.request.user)
         if obj.author != self.request.user:
-            raise PermissionDenied()
+            raise PermissionDenied("You do not have permission to edit.")
         return super(UpdateView, self).dispatch(request, *args, **kwargs)
 
 
 class DeleteView(LoginRequiredMixin, generic.edit.DeleteView):
     model = Shop
     success_url = reverse_lazy("main:index")
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        print(obj.author)
+        print(self.request.user)
+        if obj.author != self.request.user:
+            raise PermissionDenied("You do not have permission to delete.")
+        return super(DeleteView, self).dispatch(request, *args, **kwargs)
