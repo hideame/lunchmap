@@ -6,7 +6,7 @@ from django.views import generic
 from .models import Shop
 
 
-class IndexView(generic.ListView):
+class ListView(generic.ListView):
     model = Shop
 
 
@@ -29,8 +29,6 @@ class UpdateView(LoginRequiredMixin, generic.edit.UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()
-        print(obj.author)
-        print(self.request.user)
         if obj.author != self.request.user:
             raise PermissionDenied("You do not have permission to edit.")
         return super(UpdateView, self).dispatch(request, *args, **kwargs)
@@ -38,12 +36,10 @@ class UpdateView(LoginRequiredMixin, generic.edit.UpdateView):
 
 class DeleteView(LoginRequiredMixin, generic.edit.DeleteView):
     model = Shop
-    success_url = reverse_lazy("main:index")
+    success_url = reverse_lazy("main:list")
 
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()
-        print(obj.author)
-        print(self.request.user)
         if obj.author != self.request.user:
             raise PermissionDenied("You do not have permission to delete.")
         return super(DeleteView, self).dispatch(request, *args, **kwargs)
