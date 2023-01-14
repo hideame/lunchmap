@@ -72,7 +72,12 @@ class TestCreateView(TestCase):
         # データの登録
         create_response = self.client.post(self.create_url, params)
         self.assertRedirects(
-            create_response, self.detail_url, status_code=302, target_status_code=200, msg_prefix="", fetch_redirect_response=True
+            create_response,
+            self.detail_url,
+            status_code=302,
+            target_status_code=200,
+            msg_prefix="",
+            fetch_redirect_response=True,
         )
         detail_response = self.client.get(self.detail_url)
         # データが登録されていることを確認
@@ -93,7 +98,12 @@ class TestCreateView(TestCase):
         create_response = self.client.post(self.create_url, params)
         expected_url = "/accounts/login/?next=/main/create/"
         self.assertRedirects(
-            create_response, expected_url, status_code=302, target_status_code=200, msg_prefix="", fetch_redirect_response=True
+            create_response,
+            expected_url,
+            status_code=302,
+            target_status_code=200,
+            msg_prefix="",
+            fetch_redirect_response=True,
         )
         # データが登録されていないことを確認
         self.assertFalse(Shop.objects.filter(name="炎神").exists())
@@ -149,7 +159,7 @@ class TestCreateView(TestCase):
     def test_異常系_create_存在しないカテゴリID(self):
         self.pytaro_login()
         category = Category.objects.filter(name="中華料理").first()
-        category.id = 99            # 存在しないカテゴリID
+        category.id = 99  # 存在しないカテゴリID
         params = {
             "name": "炎神",
             "address": "茨城県水戸市桜川2-1-6アイランドビル1F",
@@ -176,7 +186,12 @@ class TestCreateView(TestCase):
         # データの登録
         create_response = self.client.post(self.create_url, params)
         self.assertRedirects(
-            create_response, self.detail_url, status_code=302, target_status_code=200, msg_prefix="", fetch_redirect_response=True
+            create_response,
+            self.detail_url,
+            status_code=302,
+            target_status_code=200,
+            msg_prefix="",
+            fetch_redirect_response=True,
         )
         detail_response = self.client.get(self.detail_url)
         # データが登録されていることを確認
@@ -201,6 +216,3 @@ class TestCreateView(TestCase):
         self.assertDictEqual(create_response.context["form"].errors, expect_form_errors)
         # データが登録されていないことを確認
         self.assertFalse(Shop.objects.filter(address="茨城県水戸市桜川2-1-6アイランドビル1F").exists())
-
-
-
