@@ -23,28 +23,33 @@ class TestListView(TestCase):
     def test_正常系_list_pytaro(self):
         """トップページへ遷移できることをテスト"""
         self.pytaro_login()
-        response = self.client.get(self.list_url)
-        self.assertEqual(response.status_code, 200)
+        list_response = self.client.get(self.list_url)
+        self.assertEqual(list_response.status_code, 200)
 
     def test_正常系_list_未ログイン(self):
         """トップページへ遷移できることをテスト"""
         self.client.logout()
-        response = self.client.get(self.list_url)
-        self.assertEqual(response.status_code, 200)
+        list_response = self.client.get(self.list_url)
+        self.assertEqual(list_response.status_code, 200)
 
     def test_正常系_create_pytaro(self):
         """記事作成ページへ遷移できることをテスト"""
         self.pytaro_login()
-        response = self.client.get(self.create_url)
-        self.assertEqual(response.status_code, 200)
+        create_response = self.client.get(self.create_url)
+        self.assertEqual(create_response.status_code, 200)
 
     def test_正常系_create_未ログイン(self):
         """記事作成ページへ遷移できないことをテスト"""
         self.client.logout()
-        response = self.client.get(self.create_url)
+        create_response = self.client.get(self.create_url)
         expected_url = "/accounts/login/?next=/main/create/"
         self.assertRedirects(
-            response, expected_url, status_code=302, target_status_code=200, msg_prefix="", fetch_redirect_response=True
+            create_response,
+            expected_url,
+            status_code=302,
+            target_status_code=200,
+            msg_prefix="",
+            fetch_redirect_response=True,
         )
 
 
