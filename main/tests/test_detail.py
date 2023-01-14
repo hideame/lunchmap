@@ -9,6 +9,7 @@ class TestDetailView(TestCase):
     fixtures = ["users", "category"]
     detail_url = reverse_lazy("main:detail", kwargs={"pk": 1})
     update_url = reverse_lazy("main:update", kwargs={"pk": 1})
+    delete_url = reverse_lazy("main:delete", kwargs={"pk": 1})
 
     def setUp(self):
         self.pytaro_login()
@@ -52,6 +53,12 @@ class TestDetailView(TestCase):
         update_response = self.client.get(self.update_url)
         self.assertEqual(update_response.status_code, 200)
 
+    def test_正常系_delete_pytaro(self):
+        """記事削除ページへ遷移できることをテスト"""
+        self.pytaro_login()
+        delete_response = self.client.get(self.delete_url)
+        self.assertEqual(delete_response.status_code, 200)
+
     def test_異常系_update_pyjiro(self):
         """記事編集ページへ遷移できないことをテスト"""
         self.pyjiro_login()
@@ -63,3 +70,21 @@ class TestDetailView(TestCase):
         self.client.logout()
         update_response = self.client.get(self.update_url)
         self.assertEqual(update_response.status_code, 403)
+
+    def test_正常系_delete_pytaro(self):
+        """記事削除ページへ遷移できることをテスト"""
+        self.pytaro_login()
+        delete_response = self.client.get(self.delete_url)
+        self.assertEqual(delete_response.status_code, 200)
+
+    def test_異常系_delete_pyjiro(self):
+        """記事削除ページへ遷移できないことをテスト"""
+        self.pyjiro_login()
+        delete_response = self.client.get(self.delete_url)
+        self.assertEqual(delete_response.status_code, 403)
+
+    def test_異常系_delete_未ログイン(self):
+        """記事編集ページへ遷移できないことをテスト"""
+        self.client.logout()
+        delete_response = self.client.get(self.delete_url)
+        self.assertEqual(delete_response.status_code, 403)
