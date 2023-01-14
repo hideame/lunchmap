@@ -61,7 +61,7 @@ class TestCreateView(TestCase):
 
     def test_正常系_create_pytaro(self):
         self.pytaro_login()
-        category = Category.objects.filter(name="中華料理").first()
+        category = Category.objects.get(name="中華料理")
         params = {
             "name": "炎神",
             "address": "茨城県水戸市桜川2-1-6アイランドビル1F",
@@ -86,7 +86,7 @@ class TestCreateView(TestCase):
 
     def test_異常系_create_未ログイン(self):
         self.client.logout()
-        category = Category.objects.filter(name="中華料理").first()
+        category = Category.objects.get(name="中華料理")
         params = {
             "name": "炎神",
             "address": "茨城県水戸市桜川2-1-6アイランドビル1F",
@@ -110,7 +110,7 @@ class TestCreateView(TestCase):
 
     def test_異常系_create_店名なし(self):
         self.pytaro_login()
-        category = Category.objects.filter(name="中華料理").first()
+        category = Category.objects.get(name="中華料理")
         params = {
             "name": "",
             "address": "茨城県水戸市桜川2-1-6アイランドビル1F",
@@ -126,7 +126,7 @@ class TestCreateView(TestCase):
 
     def test_異常系_create_住所なし(self):
         self.pytaro_login()
-        category = Category.objects.filter(name="中華料理").first()
+        category = Category.objects.get(name="中華料理")
         params = {
             "name": "炎神",
             "address": "",
@@ -142,7 +142,7 @@ class TestCreateView(TestCase):
 
     def test_異常系_create_カテゴリなし(self):
         self.pytaro_login()
-        category = Category.objects.filter(name="中華料理").first()
+        category = Category.objects.get(name="中華料理")
         params = {
             "name": "炎神",
             "address": "茨城県水戸市桜川2-1-6アイランドビル1F",
@@ -158,7 +158,7 @@ class TestCreateView(TestCase):
 
     def test_異常系_create_存在しないカテゴリID(self):
         self.pytaro_login()
-        category = Category.objects.filter(name="中華料理").first()
+        category = Category.objects.get(name="中華料理")
         category.id = 99  # 存在しないカテゴリID
         params = {
             "name": "炎神",
@@ -175,7 +175,7 @@ class TestCreateView(TestCase):
 
     def test_正常系_create_店名255文字(self):
         self.pytaro_login()
-        category = Category.objects.filter(name="中華料理").first()
+        category = Category.objects.get(name="中華料理")
         params = {
             "name": self.char_255,
             "address": "茨城県水戸市桜川2-1-6アイランドビル1F",
@@ -201,7 +201,7 @@ class TestCreateView(TestCase):
 
     def test_異常系_create_店名256文字(self):
         self.pytaro_login()
-        category = Category.objects.filter(name="中華料理").first()
+        category = Category.objects.get(name="中華料理")
         params = {
             "name": self.char_255 + "a",
             "address": "茨城県水戸市桜川2-1-6アイランドビル1F",
